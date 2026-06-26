@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         SONAR_IP = '202.51.82.42'
+        IMAGE_REPO = "ghcr.io/rishi-prajapati/cwvj-devsecops-demo"
     }
     stages {
         stage('Trivy FS Scan') {
@@ -32,6 +33,12 @@ pipeline {
                             --password-stdin
                     '''
                 }
+            }
+        }
+        stage('Build Image') {
+            steps {
+                sh 'export DOCKER_BUILDKIT=0 && docker build --platform linux/amd64 -t "$IMAGE_REPO:$BUILD_NUMBER" -t "$IMAGE_REPO:latest" .'
+
             }
         }
     }
