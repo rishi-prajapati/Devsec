@@ -46,12 +46,12 @@ pipeline {
                 sh 'trivy image --severity HIGH,CRITICAL "$IMAGE_REPO:$BUILD_NUMBER"'
             }
         }
-        // stage('Push to GHCR') {
-        //     steps {
-        //         sh 'docker push "$IMAGE_REPO:$BUILD_NUMBER"'
-        //         sh 'docker push "$IMAGE_REPO:latest"'
-        //     }
-        // }
+        stage('Push to GHCR') {
+            steps {
+                sh 'docker push "$IMAGE_REPO:$BUILD_NUMBER"'
+                sh 'docker push "$IMAGE_REPO:latest"'
+            }
+        }
     }
 }
 
